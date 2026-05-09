@@ -4,23 +4,23 @@
     "slug": "pokemon-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/pokebola.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/pikachu.png",
       "resizeMode": "contain",
       "backgroundColor": "#0e0e1c"
     },
     "ios": { "supportsTablet": true },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/pokebola.png",
         "backgroundColor": "#0e0e1c"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./assets/pikachu.png",
       "bundler": "metro"
     }
   }
