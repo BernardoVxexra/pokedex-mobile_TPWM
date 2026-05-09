@@ -1,4 +1,4 @@
-# 🎮 PokéTrainer
+# PokéTrainer
 
 Aplicativo mobile desenvolvido com **Expo + React Native** para a disciplina de Projeto Mobile — Fatec 2026.
 
