@@ -23,6 +23,7 @@ import { PokemonDetailModal } from '../../src/components/pokemon/PokemonDetailMo
 import { PokeballLoader } from '../../src/components/common/PokeballLoader';
 import { Pokemon } from '../../src/@types';
 import { useAuth } from '../../src/context/AuthContext';
+import { usePokemon } from '../../src/context/PokemonContext';
 
 const { width } = Dimensions.get('window');
 const SLOT_SIZE = (width - 80) / 5;
@@ -30,6 +31,7 @@ const MAX_USER_PICKS = 25;
 
 export default function TeamScreen() {
   const { user, updateUser } = useAuth();
+  const { syncTeamWithApi } = usePokemon();
   const [randomTeam, setRandomTeam] = useState<Pokemon[]>([]);
   const [userTeam, setUserTeam] = useState<Pokemon[]>([]);
   const [allPokemons, setAllPokemons] = useState<Pokemon[]>([]);
@@ -107,10 +109,20 @@ export default function TeamScreen() {
   };
 
   const confirmTeam = async () => {
-    const ids = Array.from(selectedIds);
-    await updateUser({ team: ids });
-    await loadUserTeam(ids);
+    if (!user) return;
+
+    const previousIds = user.team ?? [];
+    const newIds = Array.from(selectedIds);
+
+    // 1. Salva localmente (imediato)
+    await updateUser({ team: newIds });
+    await loadUserTeam(newIds);
     setShowPicker(false);
+
+    // 2. Sincroniza com a API em background
+    syncTeamWithApi(user.id, newIds, previousIds).catch((err) =>
+      console.warn('[team.tsx] syncTeamWithApi error:', err)
+    );
   };
 
   const openDetail = (pokemon: Pokemon) => {
@@ -464,7 +476,6 @@ const styles = StyleSheet.create({
   userTeamGrid: {
     gap: 6,
   },
-  // Picker styles
   pickerHeader: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -56,7 +56,7 @@ export default function LoginScreen() {
     setLoading(false);
     if (!success) {
       shake();
-      Alert.alert('Erro', 'Email ou senha inválidos!\n\nDica: use test@test.com / 123456');
+      Alert.alert('Erro', 'Usuário ou senha inválidos!');
     }
   };
 
@@ -94,16 +94,15 @@ export default function LoginScreen() {
               <Text style={styles.formTitle}>Login</Text>
 
               <View style={styles.inputGroup}>
-                <Text style={styles.label}>Email</Text>
+                <Text style={styles.label}>Usuário</Text>
                 <View style={styles.inputWrapper}>
-                  <Text style={styles.inputIcon}>✉️</Text>
+                  <Text style={styles.inputIcon}>👤</Text>
                   <TextInput
                     style={styles.input}
                     value={email}
                     onChangeText={setEmail}
-                    placeholder="trainer@pokemon.com"
+                    placeholder="seu_usuario"
                     placeholderTextColor={COLORS.textMuted}
-                    keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                   />
@@ -140,10 +139,6 @@ export default function LoginScreen() {
                   <Text style={styles.loginBtnText}>ENTRAR</Text>
                 )}
               </TouchableOpacity>
-
-              <View style={styles.hint}>
-                <Text style={styles.hintText}>💡 Conta de teste: test@test.com / 123456</Text>
-              </View>
             </Animated.View>
           </Animated.View>
         </ScrollView>
@@ -319,18 +314,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '900',
     letterSpacing: 2,
-  },
-  hint: {
-    marginTop: 20,
-    padding: 12,
-    backgroundColor: COLORS.card,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-  },
-  hintText: {
-    color: COLORS.textMuted,
-    fontSize: 12,
-    textAlign: 'center',
   },
 });
