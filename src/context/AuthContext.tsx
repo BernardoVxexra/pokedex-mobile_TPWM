@@ -28,14 +28,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       // A API usa username — extrai a parte antes do "@" se vier email
       const username = email.includes('@') ? email.split('@')[0] : email;
-
       const authData = await apiLogin(username, password);
 
       // Busca wins/losses
-      const statsData = await apiGetStats(authData.id);
+      const statsData = await apiGetStats(authData.userId);
 
       const userData: User = {
-        id: authData.id,
+        id: authData.userId,
         username: authData.username ?? username,
         email: email,
         avatar: undefined,

@@ -25,12 +25,8 @@ Escaneie o QR code com o aplicativo **Expo Go** no seu celular.
 
 Use uma das contas de teste:
 
-| Email | Senha | Usuário |
-|-------|-------|---------|
-| test@test.com | 123456 | Treinador |
-| ash@pokemon.com | 123456 | Ash Ketchum |
-| misty@pokemon.com | 123456 | Misty |
-| brock@pokemon.com | 123456 | Brock |
+Usuário   Senha
+test    | 123456
 
 ---
 

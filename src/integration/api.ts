@@ -14,9 +14,8 @@ export interface AuthPayload {
 }
 
 export interface AuthResponse {
-  /** UUID do usuário retornado pelo backend */
-  id: string;
-  username: string;
+  userId: string;
+  username?: string;
   token?: string;
   [key: string]: unknown;
 }

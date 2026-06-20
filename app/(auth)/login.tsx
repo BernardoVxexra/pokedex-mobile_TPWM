@@ -120,6 +120,8 @@ export default function LoginScreen() {
                     placeholder="••••••••"
                     placeholderTextColor={COLORS.textMuted}
                     secureTextEntry={!showPass}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                   />
                   <TouchableOpacity onPress={() => setShowPass(!showPass)} style={styles.eyeBtn}>
                     <Text style={styles.eyeText}>{showPass ? '🙈' : '👁️'}</Text>
