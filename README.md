@@ -30,6 +30,33 @@ test    | 123456
 
 ---
 
+## 🔒 Segurança da sessão
+
+O login não guarda mais usuário/senha nem token em texto puro. O fluxo agora é baseado em sessão temporária:
+
+- **Access token**: validade de 5 min, mantido só em memória (nunca é salvo em disco).
+- **Refresh token**: validade de 8h, guardado no Keychain/Keystore do aparelho (via `expo-secure-store`), ou cifrado no navegador quando rodando na web. Vencido, a sessão cai sozinha e o app volta pro login sem precisar de ação nenhuma.
+- Se o backend devolver `accessToken`/`token`, esses passam a ser os tokens oficiais da sessão. Se devolver só `userId` — caso do backend atual (AWS) —, o app emite localmente um ticket assinado por uma chave que nasce no aparelho e nunca sai dele.
+- Toda requisição sai assinada (`X-Poke-Timestamp`, `X-Poke-Nonce`, `X-Poke-Signature`), dificultando repetir uma requisição capturada. Se o backend confirmar um canal seguro no login, as respostas trafegam num envelope cifrado com AES-256-GCM.
+- O perfil salvo localmente (time, vitórias/derrotas) é selado com HMAC no celular e cifrado com AES-256-GCM na web — um save editado à mão é descartado automaticamente. Saves antigos em texto puro são migrados no primeiro login.
+
+Nada disso substitui HTTPS nem validação no servidor — é uma camada extra que dificulta bisbilhotar/adulterar/repetir tráfego do lado do cliente. Quem decide de fato é o backend. Trocar de backend é só mudar `EXPO_PUBLIC_API_URL` (veja `.env.example`).
+
+Onde está cada coisa:
+
+| Arquivo | Responsabilidade |
+| --- | --- |
+| `src/config/env.ts` | URL da nuvem, rotas e validade dos tokens |
+| `src/security/crypto.ts` | AES-256-GCM, HMAC-SHA256, hash, bytes aleatórios |
+| `src/security/secureStore.ts` | chave de dispositivo, segredos e dados protegidos |
+| `src/security/session.ts` | ciclo de vida da sessão e emissão dos tickets |
+| `src/security/envelope.ts` | assinatura de requisições e abertura do envelope cifrado |
+| `src/integration/cloudClient.ts` | portão único de HTTP: sessão, assinatura, 401 |
+| `src/integration/authApi.ts` | login, cadastro, logout, perfil/estatísticas |
+| `src/context/AuthContext.tsx` | estado de autenticação para as telas |
+
+---
+
 ## 📱 Telas
 
 ### 1. Login (`/login`)

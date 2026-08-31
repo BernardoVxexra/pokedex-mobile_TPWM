@@ -5,3 +5,8 @@
 expo-env.d.ts
 # @end expo-cli
 node_modules
+LOGIN-INSPIRACAO.md
+
+# variáveis de ambiente locais (URL de backend, etc.)
+.env
+.env.local

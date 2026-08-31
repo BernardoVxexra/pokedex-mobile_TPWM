@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#CC0000"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.pokedex.app"
@@ -29,11 +31,15 @@
     },
     "plugins": [
       "expo-router",
-      "expo-image-picker"
+      "expo-image-picker",
+      "expo-secure-store"
     ],
     "scheme": "pokedex",
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "apiUrl": "https://lnh1dhp1mj.execute-api.us-east-1.amazonaws.com/api-pokemon"
     }
   }
 }

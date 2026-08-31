@@ -51,6 +51,8 @@ export interface User {
 export interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  /** Timestamp (ms) em que a sessão cai por completo (vencimento do refresh token). */
+  sessionExpiresAt: number | null;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   updateUser: (data: Partial<User>) => void;
